@@ -18,9 +18,53 @@
     </form>
   </div>
 </div>
-    <script type="module" src="login.js"></script>
+    <script>
+            if ("serviceWorker" in navigator && "PushManager" in window) {
+      navigator.serviceWorker.register("/sw.js").then(reg => {
+        console.log("Service Worker registrován", reg);
+    
+        // požádáme o povolení
+        Notification.requestPermission().then(permission => {
+          if (permission === "granted") {
+            console.log("Notifikace povoleny");
+          }
+        });
+      });
+    }
+
+        
+        self.addEventListener("push", event => {
+      const data = event.data ? event.data.text() : "Máme novou zprávu!";
+      event.waitUntil(
+        self.registration.showNotification("📢 Upozornění", {
+          body: data,
+          icon: "/icon.png"
+        })
+      );
+    });
+
+        const webpush = require("web-push");
+        
+        // klíče vygeneruješ pomocí webpush.generateVAPIDKeys()
+        const vapidKeys = {
+          publicKey: "TVŮJ_PUBLIC_KEY",
+          privateKey: "TVŮJ_PRIVATE_KEY"
+        };
+        
+        webpush.setVapidDetails(
+          "mailto:example@domena.cz",
+          vapidKeys.publicKey,
+          vapidKeys.privateKey
+        );
+        
+        // subscription = objekt, co získáš z klienta
+        webpush.sendNotification(subscription, "Ahoj, máš novou zprávu!");
+        
+                
+    </script>
 </body>
 </html>
+
 
 
 
