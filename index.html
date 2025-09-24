@@ -9,15 +9,7 @@
     <link rel="shortcut icon" href="favicon.png" type="image/png">
 </head>
 <body>
-    <div class="login-page">
-  <div class="form">
-    <form class="login-form" id="loginForm" action="login.php" method="post">
-      <input type="text" placeholder="username" id="username" name="username" required/>
-      <input type="password" placeholder="password" id="password" name="password" required/>
-      <button type="submit">login</button>
-    </form>
-  </div>
-</div>
+    
     <script>
             if ("serviceWorker" in navigator && "PushManager" in window) {
       navigator.serviceWorker.register("/sw.js").then(reg => {
@@ -55,6 +47,7 @@
     </script>
 </body>
 </html>
+
 
 
 
